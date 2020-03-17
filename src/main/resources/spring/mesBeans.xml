@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+<!-- Declarez vos bean ici -->
+
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+  		<property name="location" value="spring/application.properties"/>
+	</bean>
+	
+	<bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor" />
+
+	<bean id="client" class="com.example.demo.Client"
+	scope="prototype"
+	init-method="init"
+	destroy-method="destroy">
+		<property name="nom" value="Dupont"/>
+		<property name="prenom" value="Léon"/>
+		<property name="age" value="25"/>
+		<property name="adresses">
+			<list>
+				<ref bean="ad1"/>
+				<ref bean="ad2"/>
+				<ref bean="ad3"/>
+			</list>
+		</property>
+	</bean>
+
+	
+	<bean id="adresse" class="com.example.demo.Adresse">
+		<property name="codePostal" value="59000"/>
+		<property name="rue" value="Nationale"/>
+		<property name="ville" value="Lille"/>
+		<property name="pays" value="France"/>
+	</bean>
+	
+	<bean id="client2" class="com.example.demo.Client">
+		<property name="nom" value="Dupont"/>
+		<property name="prenom" value="Léonce"/>
+		<property name="age" value="45"/>
+		<property name="adresses">
+			<list>
+				<ref bean="adresse"/>
+				<ref bean="adresse2"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="adresse2" class="com.example.demo.Adresse">
+		<constructor-arg value="59240"/>
+		<constructor-arg value="Alexandre"/>
+		<constructor-arg value="Dunkerque"/>
+		<constructor-arg value="France"/>
+	</bean>
+	
+	<bean id="ad1" class="com.example.demo.Adresse"
+	scope="prototype"
+	init-method="init"
+	destroy-method="destroy">
+  		<property name="codePostal" value="${addr1.codePostal}"/>
+  		<property name="rue" value="${addr1.rue}"/>
+  		<property name="ville" value="${addr1.ville}"/>
+  		<property name="pays" value="${addr1.pays}"/>
+	</bean>
+	
+	<bean id="ad2" class="com.example.demo.Adresse"
+	scope="prototype"
+	init-method="init"
+	destroy-method="destroy">
+  		<property name="codePostal" value="${addr2.codePostal}"/>
+  		<property name="rue" value="${addr2.rue}"/>
+  		<property name="ville" value="${addr2.ville}"/>
+  		<property name="pays" value="${addr2.pays}"/>
+	</bean>
+	
+	<bean id="ad3" class="com.example.demo.Adresse"
+	scope="prototype"
+	init-method="init"
+	destroy-method="destroy">
+  		<property name="codePostal" value="${addr3.codePostal}"/>
+  		<property name="rue" value="${addr3.rue}"/>
+  		<property name="ville" value="${addr3.ville}"/>
+  		<property name="pays" value="${addr3.pays}"/>
+	</bean>
+
+</beans>
